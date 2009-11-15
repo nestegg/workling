@@ -18,7 +18,7 @@ puts '** Use CTRL-C to stop.'
 ActiveRecord::Base.logger = Workling::Base.logger
 ActionController::Base.logger = Workling::Base.logger
 
-trap(:INT) { poller.stop; exit }
+trap(:TERM) { poller.stop }
 
 begin
   poller.listen
