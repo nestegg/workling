@@ -97,11 +97,9 @@ module Workling
               #     the mutex.            
               #
               @mutex.synchronize do 
-                unless ActiveRecord::Base.connection.active?  # Keep MySQL connection alive
-                  unless ActiveRecord::Base.connection.reconnect!
-                    logger.fatal("Failed - Database not available!")
-                    break
-                  end
+                ActiveRecord::Base.connection.verify!  # Keep MySQL connection alive
+                unless ActiveRecord::Base.connection.active?
+                  logger.fatal("Failed - Database not available!")
                 end
               end
 
